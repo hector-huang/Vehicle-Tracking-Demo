@@ -34,21 +34,20 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
     
     let standardImageSize = CGRect(x: 10, y: UIImage().size.height+1, width: 25, height: 25)
     let standardLabelSize = CGRect(x: 40, y: UIImage().size.height+1, width:50, height: 25)
-    var selectedEventTime: Int!
-    var selectedVehicleId =  "00004"
-    var selectedDate: Date!
-    var trackPositions = [Int: (CLLocationCoordinate2D, Int)]()
-    var eventPositions = [Int: (CLLocationCoordinate2D, String)]()
-    var tapSomewhere: Bool! //To check whether user taps the screen to interrupt the animation]
-    var mainUrl = "http://120.146.195.80:100"
+    var selectedEventTime: Int!                         //the time of selected event by the user
+    var selectedVehicleId =  "00004"                    //demo vehicle's identity
+    var trackPositions = [Int: (CLLocationCoordinate2D, Int)]() //Dictionary that stores vehicles' positions and headings
+    var eventPositions = [Int: (CLLocationCoordinate2D, String)]() //Dictionary that stores events' postions and types
+    var tapSomewhere: Bool!                             //To check whether user taps the screen to interrupt the animation]
+    var mainUrl = "http://120.146.195.80:100"           //Url that stores the event image in its subdirectory
     var urlSource = [NSURL]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupAllViews() //set up all the layout of every element
-        initializeMapView() //simulate the track of the vehicle in the map
+        setupAllViews()                     //set up all the layout of every element
+        initializeMapView()                 //simulate the track of the vehicle in the map
         updateEvent(events: eventPositions) //add every event marker to the map
-        distanceViewTapped() //tap the distance-info icon by default
+        distanceViewTapped()                //tap the distance-info icon by default
     }
     
     fileprivate func setupAllViews(){
@@ -88,11 +87,11 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
     }
     
     fileprivate func initializeMapView(){
-        setupTrackPositions() //get all the positions and their time
+        setupTrackPositions()                                                   //get all the positions and their time
         if trackPositions.isEmpty != true{
             let sortedTrackPositions = trackPositions.sorted{ $0.key < $1.key } //sort position dictionary by time
-            drawAllPath(positions: sortedTrackPositions) //draw all the paths between positions
-            setEventMarker(position: (sortedTrackPositions.first?.value.0)!, time: (sortedTrackPositions.first?.key)!, type: "Start", icon: #imageLiteral(resourceName: "home")) //mark the start position of the track, which happens at the earliest time during the day
+            drawAllPath(positions: sortedTrackPositions)                        //draw all the paths between positions
+            setEventMarker(position: (sortedTrackPositions.first?.value.0)!, time: (sortedTrackPositions.first?.key)!, type: "Start", icon: #imageLiteral(resourceName: "home"))                                          //mark the start position of the track, which happens at the earliest time during the day
         }
         
         self.view.addSubview(mapView)
@@ -116,6 +115,7 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         //If user taps at the event marker, the camera button shows at the bottom for retrieving the event images from the server. Otherwise only shows the time of the marker.
+        tapSomewhere = true
         mapView.selectedMarker = marker
         if let type = marker.snippet{
             if type != "Start"{
@@ -268,10 +268,6 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
         let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=AIzaSyDcLOCgAYx18gm0W_Wq4HQgZj2Lu-ONxN4"
         
         Alamofire.request(url).responseJSON { response in
-            print(response.request)  // original URL request
-            print(response.response) // HTTP URL response
-            print(response.data)     // server data
-            print(response.result)   // result of response serialization
             
             let json = JSON(data: response.data!)
             let routes = json["routes"].arrayValue
@@ -351,7 +347,7 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
         slideShow.start()
     }
     
-    func playTapped(_ sender:UITapGestureRecognizer){
+    func playTapped(_ sender:UITapGestureRecognizer){ //user taps play/pause button to control the event slide show.
         if play.currentImage == #imageLiteral(resourceName: "pause"){
             slideShow.stop()
             play.setImage(#imageLiteral(resourceName: "play"), for: .normal)
@@ -362,7 +358,7 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
         }
     }
     
-    func stopTapped(_ sender:UITapGestureRecognizer){
+    func stopTapped(_ sender:UITapGestureRecognizer){ //user taps stop button to turn off the event slide show.
         slideShow.stop()
         slideShow.isHidden = true
         slideShow.delegate = nil
@@ -379,14 +375,12 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
     }
     
     func timeToURLs(time: Int) -> [NSURL]{
-        var convertedDate: String!
-        convertedDate = "2017/08/15"
+        let demoDate: String! = "2017/08/15"
         
         var urls = [NSURL]()
         for index in -4...5{
             let convertedTime = timeTo0time(time: time+index)
-            print("\(mainUrl)/VEHICLE/\(selectedVehicleId)/\(convertedDate!)/EVENT/cam1-\(convertedTime)01.jpg")
-            urls.append(NSURL(string: "\(mainUrl)/VEHICLE/\(selectedVehicleId)/\(convertedDate!)/EVENT/cam1-\(convertedTime)01.jpg")!)
+            urls.append(NSURL(string: "\(mainUrl)/VEHICLE/\(selectedVehicleId)/\(demoDate!)/EVENT/cam1-\(convertedTime)01.jpg")!)
         }
         return urls
     }

@@ -10,7 +10,6 @@
 		3E337B2E1F4400C300768242 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E337B2D1F4400C300768242 /* AppDelegate.swift */; };
 		3E337B301F4400C300768242 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E337B2F1F4400C300768242 /* ViewController.swift */; };
 		3E337B331F4400C300768242 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E337B311F4400C300768242 /* Main.storyboard */; };
-		3E337B361F4400C300768242 /* VehicleTrackingDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3E337B341F4400C300768242 /* VehicleTrackingDemo.xcdatamodeld */; };
 		3E337B381F4400C300768242 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E337B371F4400C300768242 /* Assets.xcassets */; };
 		3E337B3B1F4400C300768242 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E337B391F4400C300768242 /* LaunchScreen.storyboard */; };
 		3E337B461F4400C300768242 /* VehicleTrackingDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E337B451F4400C300768242 /* VehicleTrackingDemoTests.swift */; };
@@ -41,7 +40,6 @@
 		3E337B2D1F4400C300768242 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E337B2F1F4400C300768242 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3E337B321F4400C300768242 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		3E337B351F4400C300768242 /* VehicleTrackingDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VehicleTrackingDemo.xcdatamodel; sourceTree = "<group>"; };
 		3E337B371F4400C300768242 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E337B3A1F4400C300768242 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3E337B3C1F4400C300768242 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -115,7 +113,6 @@
 				3E337B371F4400C300768242 /* Assets.xcassets */,
 				3E337B391F4400C300768242 /* LaunchScreen.storyboard */,
 				3E337B3C1F4400C300768242 /* Info.plist */,
-				3E337B341F4400C300768242 /* VehicleTrackingDemo.xcdatamodeld */,
 			);
 			path = VehicleTrackingDemo;
 			sourceTree = "<group>";
@@ -344,7 +341,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E337B621F442A1900768242 /* Event.swift in Sources */,
-				3E337B361F4400C300768242 /* VehicleTrackingDemo.xcdatamodeld in Sources */,
 				3E337B511F44068100768242 /* UIColor.swift in Sources */,
 				3E337B541F440A8000768242 /* String.swift in Sources */,
 				3E337B581F4417F300768242 /* UIImage.swift in Sources */,
@@ -578,19 +574,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		3E337B341F4400C300768242 /* VehicleTrackingDemo.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				3E337B351F4400C300768242 /* VehicleTrackingDemo.xcdatamodel */,
-			);
-			currentVersion = 3E337B351F4400C300768242 /* VehicleTrackingDemo.xcdatamodel */;
-			path = VehicleTrackingDemo.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 3E337B221F4400C300768242 /* Project object */;
 }
