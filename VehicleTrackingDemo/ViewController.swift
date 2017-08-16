@@ -379,15 +379,8 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
     }
     
     func timeToURLs(time: Int) -> [NSURL]{
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy/MM/dd"
         var convertedDate: String!
-        if let date = selectedDate{
-            convertedDate = dateFormatter.string(from: date)
-        }
-        else{
-            convertedDate = dateFormatter.string(from: Date())
-        }
+        convertedDate = "2017/08/15"
         
         var urls = [NSURL]()
         for index in -4...5{
