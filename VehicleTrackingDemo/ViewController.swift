@@ -31,6 +31,7 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
     var sampleTrackJson = "SampleTracks"
     var mapView: GMSMapView!
     var eventMarkers = [GMSMarker()]
+    var totalDistance: Int! = 0
     
     let standardImageSize = CGRect(x: 10, y: UIImage().size.height+1, width: 25, height: 25)
     let standardLabelSize = CGRect(x: 40, y: UIImage().size.height+1, width:50, height: 25)
@@ -68,7 +69,7 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
         distanceLabel.frame = standardLabelSize
         distanceView.layer.cornerRadius = 13.5
         distanceView.layer.masksToBounds = true
-        distanceLabel.text = "46 km"
+        distanceLabel.text = "0 km"
         
         let distanceViewGesture = UITapGestureRecognizer(target: self, action:  #selector (self.distanceTapped(_:)))
         distanceView.addGestureRecognizer(distanceViewGesture)
@@ -270,8 +271,7 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
         let origin = "\(position1.latitude),\(position1.longitude)"
         let destination = "\(position2.latitude),\(position2.longitude)"
         
-        
-        let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=AIzaSyDcLOCgAYx18gm0W_Wq4HQgZj2Lu-ONxN4"
+        let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=AIzaSyBFTEmpETJFA_eg-eUn5IBEM1mkf50wwRo"
         
         Alamofire.request(url).responseJSON { response in
             
@@ -285,6 +285,8 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
                 for routeleg in routelegs{
                     let distance = routeleg["distance"].dictionary
                     let meters = distance?["value"]?.intValue
+                    self.totalDistance = self.totalDistance + meters!
+                    
                     if meters! > 2000{
                         //If the navigation has returned a detour result because of the inacurrancy of the geoposition which has exceeded the normal car speed range (2km/min), draw a straight line instead
                         let path = GMSMutablePath()
@@ -303,6 +305,7 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
                     polyline.map = self.mapView
                 }
             }
+            self.distanceLabel.text = "\(self.totalDistance/1000) km"
         }
     }
     
@@ -321,6 +324,9 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
                         self.camera.isHidden = false
                         self.selectedEventTime = marker.userData as! Int!
                         self.view.bringSubview(toFront: self.camera)
+                    }
+                    else{
+                        self.camera.isHidden = true
                     }
                 }
             }
