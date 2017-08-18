@@ -101,7 +101,7 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
     }
     
     fileprivate func setupCameraButton(){
-        camera.frame = CGRect(x: 0.5*view.frame.width-20, y: 0.4*view.frame.height+0.75*self.view.frame.width, width: 40, height: 40)
+        camera.frame = CGRect(x: 0.5*view.frame.width-20, y: 0.4*view.frame.height+0.75*self.view.frame.width, width: 50, height: 50)
         camera.layer.cornerRadius = camera.bounds.size.height / 2
         camera.layer.borderWidth = 1.5
         camera.layer.borderColor = UIColor.black.cgColor
@@ -226,7 +226,13 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
             else{
                 twoPositions[0] = twoPositions[1]
                 twoPositions[1] = CLLocationCoordinate2D(latitude: position.value.0.latitude, longitude: position.value.0.longitude)
-                drawPath(position1: twoPositions[0]!, position2: twoPositions[1]!)
+                if position.key > 120000{
+                    //if afternoon, the path will be orange
+                    drawPath(position1: twoPositions[0]!, position2: twoPositions[1]!, lineColor: UIColor(hex: "FD8C08"))
+                }
+                else{
+                    drawPath(position1: twoPositions[0]!, position2: twoPositions[1]!)
+                }
             }
         }
     }
@@ -258,8 +264,8 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
         }
     }
     
-    func drawPath(position1: CLLocationCoordinate2D, position2: CLLocationCoordinate2D)
-        //draw path between one position and another assisted by Google Navigation (RestAPI), the algorithm has amended to avoid detour due to GPS inaccurency
+    func drawPath(position1: CLLocationCoordinate2D, position2: CLLocationCoordinate2D, lineColor: UIColor = UIColor(hex: "14A1FC"))
+        //draw path between one position and another assisted by Google Navigation (RestAPI), the algorithm has amended to avoid detour due to GPS inaccurency. Line color can be cutomized to distinguish time of tracks.
     {
         let origin = "\(position1.latitude),\(position1.longitude)"
         let destination = "\(position2.latitude),\(position2.longitude)"
@@ -293,7 +299,7 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
                         polyline = GMSPolyline(path: path)
                     }
                     polyline.strokeWidth = 3.0
-                    polyline.strokeColor = UIColor(hex: "14A1FC")
+                    polyline.strokeColor = lineColor
                     polyline.map = self.mapView
                 }
             }
@@ -311,6 +317,11 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
                 if !self.tapSomewhere{
                     self.mapView.animate(to: updatedCamera)
                     self.mapView.selectedMarker = marker
+                    if marker.snippet != "Start"{
+                        self.camera.isHidden = false
+                        self.selectedEventTime = marker.userData as! Int!
+                        self.view.bringSubview(toFront: self.camera)
+                    }
                 }
             }
             j = j + 2
@@ -319,6 +330,7 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
     
     func cameraTapped(_ sender: AnyObject?) {
         //If camera is tapped, a slide image controller will appear for snapshots review.
+        tapSomewhere = true //interrupt animation when camera is tapped
         urlSource = timeToURLs(time: selectedEventTime)
         
         slideShow.isHidden = false
@@ -360,6 +372,7 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
     
     func stopTapped(_ sender:UITapGestureRecognizer){ //user taps stop button to turn off the event slide show.
         slideShow.stop()
+        play.setImage(#imageLiteral(resourceName: "pause"), for: .normal) //show pause rather than play button by default
         slideShow.isHidden = true
         slideShow.delegate = nil
         slideShow.datasource = nil
