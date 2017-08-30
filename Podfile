@@ -9,4 +9,8 @@ target ‘VehicleTrackingDemo’ do
     pod 'Alamofire', '~> 4.4'
     pod 'GoogleMaps'
     pod 'GooglePlaces'
+
+    target ‘VehicleTrackingDemoTests’ do
+    	inherit! :search_paths
+    end
 end

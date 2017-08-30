@@ -50,6 +50,7 @@ typedef NS_ENUM(NSInteger, KASlideShowSlideMode) {
     frame.origin.x = 0;
     frame.origin.y = 0;
     
+    _topImageView.backgroundColor = [UIColor clearColor];
     _topImageView.frame = frame;
     _bottomImageView.frame = frame;
 }

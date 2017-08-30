@@ -11,7 +11,7 @@ import GoogleMaps
 import Alamofire
 import SwiftyJSON
 
-class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate, KASlideShowDataSource {
+class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate, KASlideShowDataSource, MKDropdownMenuDelegate, MKDropdownMenuDataSource {
     
     @IBOutlet weak var infoView: UIScrollView!
     @IBOutlet weak var distanceImage: UIImageView!
@@ -26,22 +26,25 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
     @IBOutlet weak var play: UIButton!
     @IBOutlet weak var stop: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var dropdownMenu: MKDropdownMenu!
     
-    var sampleEventJson = "SampleRecords"
-    var sampleTrackJson = "SampleTracks"
+    let selectedVehicles = ["Hector", "Dave", "Gary"]
+    let sampleEventJson = "SampleRecords"
+    let sampleTrackJson = "SampleTracks"
+    let mainUrl = "http://120.146.195.80:100"           //Url that stores the event image in its subdirectory
     var mapView: GMSMapView!
+    let movingMarker = GMSMarker()
     var eventMarkers = [GMSMarker()]
-    var totalDistance: Int! = 0
+    var urlSource = [NSURL()]
     
     let standardImageSize = CGRect(x: 10, y: UIImage().size.height+1, width: 25, height: 25)
     let standardLabelSize = CGRect(x: 40, y: UIImage().size.height+1, width:50, height: 25)
+    var totalDistance: Int! = 0
     var selectedEventTime: Int!                         //the time of selected event by the user
     var selectedVehicleId =  "00004"                    //demo vehicle's identity
     var trackPositions = [Int: (CLLocationCoordinate2D, Int)]() //Dictionary that stores vehicles' positions and headings
     var eventPositions = [Int: (CLLocationCoordinate2D, String)]() //Dictionary that stores events' postions and types
-    var tapSomewhere: Bool!                             //To check whether user taps the screen to interrupt the animation]
-    var mainUrl = "http://120.146.195.80:100"           //Url that stores the event image in its subdirectory
-    var urlSource = [NSURL]()
+    var tapSomewhere: Bool!                             //To check whether user taps the screen to interrupt the animation
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,11 +59,18 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
         setupDistanceView()
         setupEventView()
         setupCameraButton()
+        movingMarker.icon = self.imageWithImage(image: #imageLiteral(resourceName: "car"), scaledToSize: CGSize(width: 35, height: 17))
     }
     
     fileprivate func setupInfoView(){
         titleLabel.frame = CGRect(x: 0.5*self.view.frame.width-75, y: 28, width: 150, height: 30)
-        infoView.frame = CGRect(x:0, y: 0, width: self.view.frame.width, height: 90)
+        infoView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 90)
+        dropdownMenu.frame = CGRect(x: self.view.frame.width-100, y: 28, width: 90, height: 30)
+        let settingImage = #imageLiteral(resourceName: "setting").resizedImageWithinRect(rectSize: CGSize(width: 30, height: 30))
+        dropdownMenu.disclosureIndicatorImage = settingImage
+        dropdownMenu.delegate = self
+        dropdownMenu.dataSource = self
+        dropdownMenu.backgroundDimmingOpacity = 0
     }
     
     fileprivate func setupDistanceView(){
@@ -92,7 +102,9 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
         if trackPositions.isEmpty != true{
             let sortedTrackPositions = trackPositions.sorted{ $0.key < $1.key } //sort position dictionary by time
             drawAllPath(positions: sortedTrackPositions)                        //draw all the paths between positions
+            eventMarkers.removeAll()
             setEventMarker(position: (sortedTrackPositions.first?.value.0)!, time: (sortedTrackPositions.first?.key)!, type: "Start", icon: #imageLiteral(resourceName: "home"))                                          //mark the start position of the track, which happens at the earliest time during the day
+            animateMoveMarkers(positions: sortedTrackPositions)
         }
         
         self.view.addSubview(mapView)
@@ -107,6 +119,24 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
         camera.layer.borderWidth = 1.5
         camera.layer.borderColor = UIColor.black.cgColor
         camera.addTarget(self, action: #selector(cameraTapped(_:)), for: .touchUpInside)
+    }
+    
+    func numberOfComponents(in dropdownMenu: MKDropdownMenu) -> Int {
+        return 1
+    }
+    
+    func dropdownMenu(_ dropdownMenu: MKDropdownMenu, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let attributedString = NSAttributedString(string: selectedVehicles[row], attributes: [NSForegroundColorAttributeName: UIColor.black])
+        return attributedString
+    }
+    
+    func dropdownMenu(_ dropdownMenu: MKDropdownMenu, didSelectRow row: Int, inComponent component: Int) {
+        titleLabel.text = "\(selectedVehicles[row])'s Track"
+        dropdownMenu.closeAllComponents(animated: true)
+    }
+    
+    func dropdownMenu(_ dropdownMenu: MKDropdownMenu, numberOfRowsInComponent component: Int) -> Int {
+        return selectedVehicles.count
     }
     
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
@@ -151,7 +181,8 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
         eventView.backgroundColor = UIColor.darkGray
         eventImage.image = #imageLiteral(resourceName: "careventTapped")
         eventLabel.textColor = UIColor(hex: "F1F8E9")
-        animateEventMarkers(markers: eventMarkers)
+        print(eventMarkers)
+        animateEventMarkers(markers: eventMarkers.sorted(by: {$0.userData as! Int! < $1.userData as! Int!}))
     }
     
     func distanceViewUntapped(){
@@ -199,14 +230,8 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
     }
     
     func setMarker(position: CLLocationCoordinate2D, heading: Int, time: Int){
-        let sortedTrackPositions = trackPositions.sorted{ $0.key < $1.key }
         let marker = GMSMarker()
-        if time != sortedTrackPositions.last?.key{
-            marker.icon = imageWithImage(image: #imageLiteral(resourceName: "car"), scaledToSize: CGSize(width: 17.5, height: 8.5)).alpha(0.3)
-        }
-        else{
-           marker.icon = imageWithImage(image: #imageLiteral(resourceName: "car"), scaledToSize: CGSize(width: 35, height: 17))
-        }
+        marker.icon = imageWithImage(image: #imageLiteral(resourceName: "car"), scaledToSize: CGSize(width: 17.5, height: 8.5)).alpha(0.3)
         marker.position = position
         marker.title = timeToString(time: time)
         marker.rotation = CDouble(heading+90)
@@ -314,8 +339,7 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
         var j = 0.0
         //display every event marker every 2 seconds untill user taps elsewhere in the screen to interrupt
         for marker in markers{
-            let when = DispatchTime.now() + j
-            DispatchQueue.main.asyncAfter(deadline: when) {
+            delay(2*j){
                 let updatedCamera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: 15.0)
                 if !self.tapSomewhere{
                     self.mapView.animate(to: updatedCamera)
@@ -330,7 +354,70 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
                     }
                 }
             }
-            j = j + 2
+            j += 1
+        }
+    }
+    
+    func animateMoveMarkers(positions: [(key: Int, value: (CLLocationCoordinate2D, Int))]){
+        //animate the tracking of the marker, only animate path between two given positions on account of memory performance
+        var twoPositions = [CLLocationCoordinate2D?](repeating: nil, count: 2)
+        var j = 0.0
+        for position in positions{
+            if twoPositions[1] == nil{
+                twoPositions[1] = CLLocationCoordinate2D(latitude: position.value.0.latitude, longitude: position.value.0.longitude)
+            }
+            else{
+                delay(Double(j)){
+                    twoPositions[0] = twoPositions[1]
+                    twoPositions[1] = CLLocationCoordinate2D(latitude: position.value.0.latitude, longitude: position.value.0.longitude)
+                    self.animateMoveMarker(oldPosition: twoPositions[0]!, newPosition: twoPositions[1]!, heading: position.value.1)
+                }
+            }
+            j += 2.1 //set another two new positions and launch the animation every 2.1 seconds, which lasts 0.1 sec longer than the animation to make sure the previous animation has completed
+        }
+    }
+    
+    func delay(_ delay:Double, closure:@escaping ()->()) {
+        DispatchQueue.main.asyncAfter(
+            deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
+    }
+    
+    func animateMoveMarker(oldPosition: CLLocationCoordinate2D, newPosition: CLLocationCoordinate2D, heading: Int){
+        movingMarker.groundAnchor = CGPoint(x: CGFloat(0.5), y: CGFloat(0.5))
+        movingMarker.rotation = CLLocationDegrees(getHeadingForDirection(fromCoordinate: oldPosition, toCoordinate: newPosition))
+        //found bearing value by calculation when marker add
+        movingMarker.position = oldPosition
+        //this can be old position to make car movement to new position
+        movingMarker.map = mapView
+        //marker movement animation
+        CATransaction.begin()
+        CATransaction.setValue(Int(2.0), forKey: kCATransactionAnimationDuration)
+        CATransaction.setCompletionBlock({() -> Void in
+            self.movingMarker.groundAnchor = CGPoint(x: CGFloat(0.5), y: CGFloat(0.5))
+            self.movingMarker.rotation = CDouble(heading+90)
+            //New bearing value from backend after car movement is done
+        })
+        movingMarker.position = newPosition
+        //this can be new position after car moved from old position to new position with animation
+        movingMarker.groundAnchor = CGPoint(x: CGFloat(0.5), y: CGFloat(0.5))
+        movingMarker.rotation = CDouble(getHeadingForDirection(fromCoordinate: oldPosition, toCoordinate: newPosition))
+        //found bearing value by calculation
+        CATransaction.commit()
+        print("animateMovemarker")
+    }
+    
+    func getHeadingForDirection(fromCoordinate fromLoc: CLLocationCoordinate2D, toCoordinate toLoc: CLLocationCoordinate2D) -> Float {
+        
+        let fLat: Float = Float((fromLoc.latitude).degreesToRadians)
+        let fLng: Float = Float((fromLoc.longitude).degreesToRadians)
+        let tLat: Float = Float((toLoc.latitude).degreesToRadians)
+        let tLng: Float = Float((toLoc.longitude).degreesToRadians)
+        let degree: Float = (atan2(sin(tLng - fLng) * cos(tLat), cos(fLat) * sin(tLat) - sin(fLat) * cos(tLat) * cos(tLng - fLng))).radiansToDegrees
+        if degree >= 0 {
+            return degree+90
+        }
+        else {
+            return 360 + degree+90
         }
     }
     
@@ -346,6 +433,7 @@ class ViewController: UIViewController, GMSMapViewDelegate, KASlideShowDelegate,
         slideShow.transitionDuration = 0.5
         slideShow.transitionType = KASlideShowTransitionType.fade
         slideShow.contentMode = .scaleAspectFit
+        slideShow.backgroundColor = UIColor.black
         slideShow.frame = CGRect(x: 0, y: 0.4*self.view.frame.height, width: self.view.frame.width, height: 0.75*self.view.frame.width)
         
         playerView.isHidden = false

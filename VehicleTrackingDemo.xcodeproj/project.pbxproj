@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E106B981F4EA6BF002379AB /* FloatingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E106B971F4EA6BF002379AB /* FloatingPoint.swift */; };
 		3E337B2E1F4400C300768242 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E337B2D1F4400C300768242 /* AppDelegate.swift */; };
 		3E337B301F4400C300768242 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E337B2F1F4400C300768242 /* ViewController.swift */; };
 		3E337B331F4400C300768242 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E337B311F4400C300768242 /* Main.storyboard */; };
@@ -21,6 +22,8 @@
 		3E337B651F44398F00768242 /* SampleRecords.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E337B631F44398F00768242 /* SampleRecords.json */; };
 		3E337B661F44398F00768242 /* SampleTracks.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E337B641F44398F00768242 /* SampleTracks.json */; };
 		3E337B6A1F44422900768242 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E337B691F44422900768242 /* Track.swift */; };
+		3E3EC6DF1F5654DA0009A6DB /* MKDropdownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E3EC6DE1F5654DA0009A6DB /* MKDropdownMenu.m */; };
+		982E65C29DD520AF266772E4 /* Pods_VehicleTrackingDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3BDDEFAAA3C0197BD8A4BB4 /* Pods_VehicleTrackingDemoTests.framework */; };
 		AE660DEA27EF7CBFF48FEA05 /* Pods_VehicleTrackingDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88546AEDC3C804762075E57F /* Pods_VehicleTrackingDemo.framework */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		3667F459AFF5B23D74E99136 /* Pods-VehicleTrackingDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VehicleTrackingDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-VehicleTrackingDemo/Pods-VehicleTrackingDemo.release.xcconfig"; sourceTree = "<group>"; };
+		3E106B971F4EA6BF002379AB /* FloatingPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingPoint.swift; sourceTree = "<group>"; };
 		3E337B2A1F4400C300768242 /* VehicleTrackingDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VehicleTrackingDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E337B2D1F4400C300768242 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E337B2F1F4400C300768242 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,8 +60,13 @@
 		3E337B631F44398F00768242 /* SampleRecords.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = SampleRecords.json; path = VehicleTrackingDemo/SampleRecords.json; sourceTree = "<group>"; };
 		3E337B641F44398F00768242 /* SampleTracks.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = SampleTracks.json; path = VehicleTrackingDemo/SampleTracks.json; sourceTree = "<group>"; };
 		3E337B691F44422900768242 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		3E3EC6DD1F5654DA0009A6DB /* MKDropdownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MKDropdownMenu.h; path = MKDropdownMenu/MKDropdownMenu.h; sourceTree = "<group>"; };
+		3E3EC6DE1F5654DA0009A6DB /* MKDropdownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MKDropdownMenu.m; path = MKDropdownMenu/MKDropdownMenu.m; sourceTree = "<group>"; };
+		693A0E808C6F9EAC1009C826 /* Pods-VehicleTrackingDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VehicleTrackingDemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VehicleTrackingDemoTests/Pods-VehicleTrackingDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		88546AEDC3C804762075E57F /* Pods_VehicleTrackingDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VehicleTrackingDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B266D7A5B60218A7950C33E8 /* Pods-VehicleTrackingDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VehicleTrackingDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VehicleTrackingDemo/Pods-VehicleTrackingDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		E99DBA4B3D1CB0B655C23673 /* Pods-VehicleTrackingDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VehicleTrackingDemoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VehicleTrackingDemoTests/Pods-VehicleTrackingDemoTests.release.xcconfig"; sourceTree = "<group>"; };
+		F3BDDEFAAA3C0197BD8A4BB4 /* Pods_VehicleTrackingDemoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VehicleTrackingDemoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				982E65C29DD520AF266772E4 /* Pods_VehicleTrackingDemoTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +94,7 @@
 			children = (
 				3E337B6C1F444FE400768242 /* Jsons */,
 				3E337B6B1F444FD500768242 /* Structs */,
+				3E3EC6E01F5654E20009A6DB /* MKDropdownMenu */,
 				3E337B5E1F441B3900768242 /* KASlideShow */,
 				3E337B521F44068E00768242 /* Extension */,
 				3E337B2C1F4400C300768242 /* VehicleTrackingDemo */,
@@ -132,6 +143,7 @@
 				3E337B501F44068100768242 /* UIColor.swift */,
 				3E337B531F440A8000768242 /* String.swift */,
 				3E337B571F4417F300768242 /* UIImage.swift */,
+				3E106B971F4EA6BF002379AB /* FloatingPoint.swift */,
 			);
 			name = Extension;
 			path = VehicleTrackingDemo;
@@ -164,11 +176,22 @@
 			name = Jsons;
 			sourceTree = "<group>";
 		};
+		3E3EC6E01F5654E20009A6DB /* MKDropdownMenu */ = {
+			isa = PBXGroup;
+			children = (
+				3E3EC6DD1F5654DA0009A6DB /* MKDropdownMenu.h */,
+				3E3EC6DE1F5654DA0009A6DB /* MKDropdownMenu.m */,
+			);
+			name = MKDropdownMenu;
+			sourceTree = "<group>";
+		};
 		6D600392B43CF704355FA2E6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				B266D7A5B60218A7950C33E8 /* Pods-VehicleTrackingDemo.debug.xcconfig */,
 				3667F459AFF5B23D74E99136 /* Pods-VehicleTrackingDemo.release.xcconfig */,
+				693A0E808C6F9EAC1009C826 /* Pods-VehicleTrackingDemoTests.debug.xcconfig */,
+				E99DBA4B3D1CB0B655C23673 /* Pods-VehicleTrackingDemoTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -177,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				88546AEDC3C804762075E57F /* Pods_VehicleTrackingDemo.framework */,
+				F3BDDEFAAA3C0197BD8A4BB4 /* Pods_VehicleTrackingDemoTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -208,9 +232,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3E337B4D1F4400C300768242 /* Build configuration list for PBXNativeTarget "VehicleTrackingDemoTests" */;
 			buildPhases = (
+				5D01F74893E6BE4BABF8B7FF /* [CP] Check Pods Manifest.lock */,
 				3E337B3D1F4400C300768242 /* Sources */,
 				3E337B3E1F4400C300768242 /* Frameworks */,
 				3E337B3F1F4400C300768242 /* Resources */,
+				5A641723AEE0B5ED0E560BF5 /* [CP] Embed Pods Frameworks */,
+				6A63D8A49F0B27866C96397D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -288,6 +315,51 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5A641723AEE0B5ED0E560BF5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VehicleTrackingDemoTests/Pods-VehicleTrackingDemoTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5D01F74893E6BE4BABF8B7FF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		6A63D8A49F0B27866C96397D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VehicleTrackingDemoTests/Pods-VehicleTrackingDemoTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A3ADB81F0A4E0DF22AAD21F7 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -343,9 +415,11 @@
 				3E337B621F442A1900768242 /* Event.swift in Sources */,
 				3E337B511F44068100768242 /* UIColor.swift in Sources */,
 				3E337B541F440A8000768242 /* String.swift in Sources */,
+				3E3EC6DF1F5654DA0009A6DB /* MKDropdownMenu.m in Sources */,
 				3E337B581F4417F300768242 /* UIImage.swift in Sources */,
 				3E337B6A1F44422900768242 /* Track.swift in Sources */,
 				3E337B301F4400C300768242 /* ViewController.swift in Sources */,
+				3E106B981F4EA6BF002379AB /* FloatingPoint.swift in Sources */,
 				3E337B5D1F441B0A00768242 /* KASlideShow.m in Sources */,
 				3E337B2E1F4400C300768242 /* AppDelegate.swift in Sources */,
 			);
@@ -407,6 +481,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -456,6 +531,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -515,6 +591,7 @@
 		};
 		3E337B4E1F4400C300768242 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 693A0E808C6F9EAC1009C826 /* Pods-VehicleTrackingDemoTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -530,6 +607,7 @@
 		};
 		3E337B4F1F4400C300768242 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E99DBA4B3D1CB0B655C23673 /* Pods-VehicleTrackingDemoTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";

@@ -9,6 +9,7 @@
 #ifndef VehicleTrackingDemo_Bridging_Header_h
 #define VehicleTrackingDemo_Bridging_Header_h
 
+#import "MKDropdownMenu.h"
 #import "KASlideShow.h"
 
 #endif /* VehicleTrackingDemo_Bridging_Header_h */
