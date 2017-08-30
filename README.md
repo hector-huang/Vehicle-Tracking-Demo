@@ -4,4 +4,4 @@ A demo app that can simulate the precise tracks of a vehicle with only limited g
 To run the project, you need to install the pod first.
 You can see the video demo first to check the functionality of this app.
 
-Video demo: https://youtu.be/buebwC-dWiE
+Video demo: https://youtu.be/XuIc5IFJ3SI
